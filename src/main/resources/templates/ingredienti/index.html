@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<div th:replace="~{fragments/bootstrap :: head}"></div>
+<title>Insert title here</title>
+</head>
+<body>
+
+<div class="container">
+	<h1 class="text-center mt-3 mb-5">Ingredienti</h1>
+	<div class="row mb-3">
+		<div class="col-6">Ritorna alla home <a href="/"  class="btn btn-primary">Home</a></div>
+		<div class="col-6 text-end">Crea una nuovo ingrediente <a href="/ingredienti/create"  class="btn btn-primary">Crea</a></div>
+	</div>
+	<table th:if="${ingredienti.size() > 0}" class="text-center table table-success table-striped">
+		<tr>
+			<th class="col-3">Nome</th>
+			<th class="col-3">button</th>
+		</tr>
+	
+		<tr  th:each = "ingrediente : ${ingredienti}" th:object="${ingrediente}">
+			<td th:text = "*{name}"></td>
+			<td >
+				<form action="#" th:action="@{'/ingredienti/delete/' + *{id}}" method="post" class="mt-2">
+					<button type="submite" class="btn btn-danger">Elimina</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<h3 th:if="${ingredienti.size()==0}" class="text-center">Non ci sono pizze al momento</h3>
+ 
+</div>
+
+<div th:replace="~{fragments/bootstrap :: script}"></div>
+</body>
+</html>

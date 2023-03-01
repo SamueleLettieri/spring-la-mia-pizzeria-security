@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<div th:replace="~{fragments/bootstrap :: head}"></div>
+<title>Insert title here</title>
+</head>
+<body>
+
+<div class="container">
+	<h1 class="text-center mt-3 mb-5">Pizze</h1>
+	<div class="row mb-3">
+		<div class="col-6">
+			<form action="/">
+				<label>Nome: </label>
+				<input type="text" name="keyword" >
+				<input type="submit" value="SEARCH">
+			</form>
+		</div>
+		<div class="col-6 text-end">Crea una nuova pizza <a href="pizze/create"  class="btn btn-primary">Crea</a></div>
+	</div>
+	<table th:if="${elencoPizze.size()>0}" class="text-center   table table-success table-striped">
+		<tr>
+			<th class="col-3">Nome</th>
+			<th class="col-3">Descrizione</th> 
+			<th class="col-3">Foto</th>
+			<th class="col-3">Prezzo</th>
+			<th class="col-3">button</th>
+		</tr>
+	
+		<tr  th:each = "elencopizza : ${elencoPizze}" th:object="${elencopizza}">
+			<td ><a th:text = "*{name}" th:href="'pizze/'+*{id}"></td>
+			<td  th:text = "*{description}"></td>
+			<td >
+				<img alt="" th:src="*{photo}" class="w-50" th:if="*{!photo.isEmpty()}">
+				<img alt="logo" th:src="@{/img/logo.png}" class="w-50" th:if="*{photo.isEmpty()}">
+			</td>
+			<td  th:text = "*{price} + '€'"></td>
+			<td >
+				<a th:href="'pizze/edit/' + *{id}"  class="btn btn-primary">Modifica</a>
+				<form action="#" th:action="@{'pizze/delete/' + *{id}}" method="post" class="mt-2">
+					<button type="submite" class="btn btn-danger">Elimina</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<h3 th:if="${elencoPizze.size()==0}" class="text-center">Non ci sono pizze al momento</h3>
+ 
+</div>
+
+<div th:replace="~{fragments/bootstrap :: script}"></div>
+</body>
+</html>
